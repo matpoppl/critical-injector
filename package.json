@@ -1,0 +1,24 @@
+{
+  "name": "critical-injector",
+  "version": "0.1.0",
+  "description": "Injects CSS or JS files contents into HTML file in marked places.",
+  "author": "matpoppl <matpop@interpc.pl>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js test/test.js && jscs index.js test/test.js",
+    "pretest": "npm run lint",
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 4.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "jscs": "^3.0.7",
+    "mocha": "^3.2.0"
+  }
+}
