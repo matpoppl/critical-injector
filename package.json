@@ -4,6 +4,7 @@
   "description": "Injects CSS or JS files contents into HTML file in marked places.",
   "author": "matpoppl <matpop@interpc.pl>",
   "license": "MIT",
+  "repository": "matpoppl/critical-injector",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js test/test.js && jscs index.js test/test.js",
