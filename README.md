@@ -2,6 +2,9 @@ Critical Injector
 ===
 
 Injects CSS or JS files contents into HTML file in marked places.
+Actual detection of critical path CSS should be done by other means. On small pages it can me done manually.
+
+You can keep Your code in separate files, process them by other packages (compile, minify) and finally inject their source.
 
 ## Usage
 
@@ -27,15 +30,19 @@ An example of this in completed form can be seen below:
 <html>
 <head>
     <!-- injector:css -->
-    <link rel="stylesheet" href="file1.css">
-    <link rel="stylesheet" href="file2.css">
+    <link rel="stylesheet" href="page-critical-1.css">
+    <link rel="stylesheet" href="page-critical-2.css">
     <!-- endinjector -->
+
+    <link rel="preload" href="page-1.css" as="style" onload="this.rel='stylesheet'">
 </head>
 <body>
     <!-- injector:js -->
-    <script src="file1.js"></script>
-    <script src="file2.js"></script>
+    <script src="page-critical-1.js"></script>
+    <script src="page-critical-2.js"></script>
     <!-- endinjector -->
+
+    <script src="page-1.js" defer></script>
 </body>
 </html>
 ```
@@ -46,9 +53,13 @@ The resulting HTML would be:
 <html>
 <head>
     <style>/* Merged contents of all CSS files */</style>
+
+    <link rel="preload" href="page-1.css" as="style" onload="this.rel='stylesheet'">
 </head>
 <body>
     <script>/* Merged contents of all JS files */</script>
+
+    <script src="page-1.js" defer></script>
 </body>
 </html>
 ```
