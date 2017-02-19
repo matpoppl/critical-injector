@@ -12,7 +12,7 @@ You can keep Your code in separate files, process them by other packages (compil
 const criticalInjector = require('critical-injector');
 
 /**
- * @param {String} newContent 
+ * @param {String} newContent
  */
 function onFinishCallback(newContent)
 {
@@ -29,7 +29,7 @@ An example of this in completed form can be seen below:
 ```html
 <html>
 <head>
-    <!-- injector:css -->
+    <!-- injector:css foo bar="baz" -->
     <link rel="stylesheet" href="page-critical-1.css">
     <link rel="stylesheet" href="page-critical-2.css">
     <!-- endinjector -->
@@ -37,7 +37,7 @@ An example of this in completed form can be seen below:
     <link rel="preload" href="page-1.css" as="style" onload="this.rel='stylesheet'">
 </head>
 <body>
-    <!-- injector:js -->
+    <!-- injector:js defer -->
     <script src="page-critical-1.js"></script>
     <script src="page-critical-2.js"></script>
     <!-- endinjector -->
@@ -52,12 +52,12 @@ The resulting HTML would be:
 ```html
 <html>
 <head>
-    <style>/* Merged contents of all CSS files */</style>
+    <style foo bar="baz">/* Merged contents of all CSS files */</style>
 
     <link rel="preload" href="page-1.css" as="style" onload="this.rel='stylesheet'">
 </head>
 <body>
-    <script>/* Merged contents of all JS files */</script>
+    <script defer>/* Merged contents of all JS files */</script>
 
     <script src="page-1.js" defer></script>
 </body>
@@ -70,7 +70,7 @@ The resulting HTML would be:
 
 ### src
 
-Type: `String`  
+Type: `String`
 Default: `none`
 
 File pathname or HTML content.
@@ -80,13 +80,13 @@ File pathname or HTML content.
 #### options.basePath
 
 Type: `String`
-Default: `none`  
+Default: `none`
 
 Extracted pathnames from [src] or [href] attributes will be appended to basePath.
 
 #### options.isPath
 
 Type: `Boolean`
-Default: `true`  
+Default: `true`
 
 Specify if first argument is a pathname or HTML content.

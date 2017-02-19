@@ -63,6 +63,23 @@ describe('critical-injector', function() {
         );
       });
     });
+
+    [{
+      args: ['<!-- inject:css foo bar="baz" -->', 'a',],
+      expected: '<style foo bar="baz">a</style>',
+    }, {
+      args: ['<!-- inject:js foo bar="baz" -->', 'b',],
+      expected: '<script foo bar="baz">b</script>',
+    },].forEach(row => {
+      it('Wrap with tag attributes', function() {
+
+        assert.equal(
+          injector.finishBlock.apply(null, row.args),
+          row.expected
+        );
+      });
+    });
+
   });
 
   describe('processBlock', function() {

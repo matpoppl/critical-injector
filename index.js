@@ -4,6 +4,10 @@ const nodePath = require('path');
 const BLOCK_START = '<!-- injector';
 const BLOCK_END = '<!-- endinjector -->';
 const PATH_REGEXP = /(src|href)\="?([^" >]+)"?/gi;
+
+/**
+ * @var {Object}
+ */
 const DEFAULTS = {
   basePath: '.',
   isPath: true,
@@ -13,8 +17,10 @@ const DEFAULTS = {
 const HARD_LIMIT = 100;
 
 /**
- * @param {String} input Path to HTML file
- * @param {Object} options
+ *
+ *
+ * @param {String} input Pathname to HTML content
+ * @param {Object} options @see DEFAULTS
  */
 function Injector(input, options) {
 
@@ -35,6 +41,8 @@ function Injector(input, options) {
 }
 
 /**
+ * Find pathnames in [src] or [href] attributes.
+ *
  * @param {String} contents
  * @return {Array.<String>}
  */
@@ -49,6 +57,8 @@ Injector.extractPaths = function*(contents) {
 };
 
 /**
+ * Find blocks in contents.
+ *
  * @param {String} contents
  * @return {Array.<String>}
  */
@@ -68,6 +78,8 @@ Injector.extractBlocks = function*(contents) {
 };
 
 /**
+ * Read & merge detected file contents.
+ *
  * @param {String} basePath
  * @param {String} block
  * @returns {String} Concatenated files contents
@@ -88,6 +100,8 @@ Injector.processBlock = function(basePath, block) {
 };
 
 /**
+ * Wrap mewBlock in proper tag based on block header with attributes.
+ *
  * @param {String} oldBlock
  * @param {String} newBlock
  * @returns {String}
@@ -95,6 +109,7 @@ Injector.processBlock = function(basePath, block) {
 Injector.finishBlock = function(oldBlock, newBlock) {
 
   let tag = '';
+  let attrs = '';
 
   if (oldBlock.indexOf(':css') > -1) {
     tag = 'style';
@@ -102,7 +117,16 @@ Injector.finishBlock = function(oldBlock, newBlock) {
     tag = 'script';
   }
 
-  return `<${tag}>${newBlock}</${tag}>`;
+  // First space after start block <!-- injector:foo| xxx -->
+  let startIndex = oldBlock.indexOf(' ', BLOCK_START.length);
+  let endIndex = oldBlock.indexOf('-->', startIndex);
+
+  // Attributes exists
+  if (endIndex - startIndex > 1) {
+    attrs = ' ' + oldBlock.substring(startIndex, endIndex).trim();
+  }
+
+  return `<${tag}${attrs}>${newBlock}</${tag}>`;
 };
 
 module.exports = Injector;

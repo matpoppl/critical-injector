@@ -1,6 +1,6 @@
 {
   "name": "critical-injector",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Injects CSS or JS files contents into HTML file in marked places.",
   "author": "matpoppl <matpop@interpc.pl>",
   "license": "MIT",
