@@ -6,22 +6,24 @@ Actual detection of critical path CSS should be done by other means. On small pa
 
 You can keep Your code in separate files, process them by other packages (compile, minify) and finally inject their source.
 
+
+
+## Install
+
+Install with [npm](https://npmjs.org/package/critical-injector)
+
+```
+npm install --save critical-injector
+```
+
 ## Usage
 
 ```js
 const criticalInjector = require('critical-injector');
 
-/**
- * @param {String} newContent
- */
-function onFinishCallback(newContent)
-{
-    // do something, save or pass
-}
-
-criticalInjector('src/file.html', {
+var newContent = criticalInjector('src/file.html', {
     basePath: '../htdocs',
-}, onFinishCallback);
+});
 ```
 
 An example of this in completed form can be seen below:
@@ -66,7 +68,7 @@ The resulting HTML would be:
 
 ## API
 
-### criticalInjector(src, options, callback)
+### criticalInjector(src, options)
 
 ### src
 
