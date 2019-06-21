@@ -18,8 +18,8 @@
     "node": ">= 4.0"
   },
   "devDependencies": {
-    "eslint": "^4.18.2",
+    "eslint": "^5.16.0",
     "jscs": "^3.0.7",
-    "mocha": "^5.0.4"
+    "mocha": "^6.1.4"
   }
 }
